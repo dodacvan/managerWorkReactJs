@@ -11,20 +11,25 @@ class TaskForm extends Component {
     };
     this.state = {
       addTask : task,
+      lastTask : { 
+          id1 : '',
+          name1 : '',
+          status1 : defaultStatus,
+      }
     };
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onClear = this.onClear.bind(this);
+    
   }
 
   componentWillMount(){
     if(this.props.task) {
       this.setState({
         addTask : this.props.task,
-        lastTask : { // lastTask : this.props.task ko hoat dong nhu y muon
-          // khi thay doi taskInput cap nhap addTask no cung thay doi luon lastTask
-          id : this.props.task.id,
-          name : this.props.task.name,
-          status : this.props.task.status,
+        lastTask : {
+          id1 : this.props.task.id,
+          name1 : this.props.task.name,
+          status1 : this.props.task.status,
         }
       });
     }
@@ -34,11 +39,10 @@ class TaskForm extends Component {
     if(nextProps.task) {
       this.setState({
         addTask : nextProps.task,
-        lastTask : {// lastTask : nextProps.task ko hoat dong nhu y muon
-          // khi thay doi taskInput cap nhap addTask no cung thay doi luon lastTask
-          id : nextProps.task.id,
-          name : nextProps.task.name,
-          status : nextProps.task.status,
+        lastTask : {
+          id1 : nextProps.task.id,
+          name1 : nextProps.task.name,
+          status1 : nextProps.task.status,
         }
       });
     }
@@ -54,12 +58,16 @@ class TaskForm extends Component {
     this.setState({
       addTask : addTask
     });
-    console.log(this.state.lastTask.name)
   }
 
   onClear() {
+    console.log(this.state.lastTask);
     this.setState({
-        addTask : this.state.lastTask
+        addTask :  {
+          id : this.state.lastTask.id1,
+          name : this.state.lastTask.name1,
+          status : this.state.lastTask.status1
+      }
     });
   }
 
@@ -84,6 +92,7 @@ class TaskForm extends Component {
               <div className="text-center">
                 <button type="submit" className="btn btn-warning" >{this.state.addTask.id ? 'Sửa' : 'Thêm'}</button>&nbsp;
                 <button type="reset" className="btn btn-danger" onClick = { this.onClear }>Hủy Bỏ</button>
+
               </div>
             </form>
           </div>
